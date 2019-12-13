@@ -1,0 +1,1642 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="Content-Security-Policy" content="default-src chrome:; img-src data: *; media-src *">
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="viewport" content="width=device-width; user-scalable=0">
+  <link rel="stylesheet" href="chrome://global/skin/aboutReader.css" type="text/css">
+  <script src="chrome://global/content/reader/aboutReader.js"></script>
+<link rel="stylesheet" href="chrome://global/skin/narrate.css"><title>YouTube Player API Reference for iframe Embeds  |  YouTube Iframe-API</title><link rel="shortcut icon" href="https://www.gstatic.com/devrel-devsite/prod/v2c9ac76a465325deeadecadac5c42eb727c931f99890694a7bf49d2cede0da04/developers/images/favicon.png"></head>
+
+<body class="light sans-serif loaded">
+  <div class="container content-width3" style="--font-size:20px;">
+    <div class="header reader-header reader-show-element" dir="ltr">
+      <a class="domain reader-domain" href="https://developers.google.com/youtube/iframe_api_reference?hl=de">developers.google.com</a>
+      <div class="domain-border"></div>
+      <h1 class="reader-title">YouTube Player API Reference for iframe Embeds  |  YouTube Iframe-API</h1>
+      <div class="credits reader-credits"></div>
+      <div class="meta-data">
+        <div class="reader-estimated-time" dir="ltr" style="text-align: left;">67-80 Minuten</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="content">
+      <div class="moz-reader-content line-height4 reader-show-element" dir="ltr"><div id="readability-page-1" class="page">
+    
+    <section>
+      
+
+
+
+
+
+
+
+
+
+        
+                  
+
+
+
+
+
+<nav>
+  
+
+  
+</nav>
+              
+      <section id="gc-wrapper">
+        
+          <ul><li><a href="#top_of_page"><span>Inhalt</span></a></li><li><a href="#Requirements"><span>Anforderungen</span></a></li><li><a href="#Getting_Started"><span>Erste Schritte</span></a></li><li><a href="#Loading_a_Video_Player"><span>Videoplayer laden</span></a></li><li><a href="#Operations"><span>Optionen</span></a></li><li><a href="#Functions"><span>Funktionen</span></a><ul><li><a href="#Queueing_Functions" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.0"><span>Wiedergabelisten-Funktionen</span></a></li><li><a href="#Playback_controls" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.1"><span>Wiedergabesteuerung und Player-Einstellungen</span></a></li><li><a href="#Playback_status" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.2"><span>Wiedergabestatus</span></a></li><li><a href="#Playback_quality" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.3"><span>Wiedergabequalität</span></a></li><li><a href="#Retrieving_video_information" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.4"><span>Videoinformationen abrufen</span></a></li><li><a href="#Retrieving_playlist_information" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.5"><span>Playlist-Informationen abrufen</span></a></li><li><a href="#Adding_event_listener" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.6"><span>Ereignis-Listener hinzufügen oder entfernen</span></a></li><li><a href="#Accessing_and_Modifying_DOM_Nodes" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="4.7"><span>DOM-Knoten aufrufen und ändern</span></a></li></ul></li><li><a href="#Events"><span>Ereignisse</span></a></li><li><a href="#Mobile_considerations"><span>Überlegungen zu Mobilgeräten</span></a><ul><li><a href="#Autoplay_and_scripted_playback" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="6.0"><span>Autoplay- und Skriptwiedergabe</span></a></li></ul></li><li><a href="#Examples"><span>Beispiele</span></a><ul><li><a href="#Example_Video_Player_Constructors" data-category="Site-Wide Custom Events" data-action="click" data-label="Right nav" data-value="7.0"><span>YT.Player -Objekte erstellen</span></a></li></ul></li><li><a href="#Revision_History"><span>Überarbeitungsverlauf</span></a></li></ul>
+          
+                          
+
+<article>
+  <article>        
+    
+
+              
+    
+    <ul><li><a href="#top_of_page"><span>Inhalt</span></a></li><li><a href="#Requirements"><span>Anforderungen</span></a></li><li><a href="#Getting_Started"><span>Erste Schritte</span></a></li><li><a href="#Loading_a_Video_Player"><span>Videoplayer laden</span></a></li><li><a href="#Operations"><span>Optionen</span></a></li><li></li></ul>
+
+    <div>
+
+              
+
+    <div itemscope="" itemtype="http://developers.google.com/ReferenceObject">
+    <meta itemprop="name" content="IFrame Player API">
+
+
+<p>
+  
+</p>
+
+<p>Mit der Iframe-Player-API kannst du auf deiner Website einen 
+YouTube-Videoplayer einbetten und den Player mit JavaScript steuern. Im 
+Unterschied zu den Player-APIs von <a href="https://developers.google.com/youtube/flash_api_reference?hl=de">Flash</a> und <a href="https://developers.google.com/youtube/js_api_reference?hl=de">JavaScript</a>, bei denen ein Flash-Objekt auf deiner Seite eingebettet wird, veröffentlicht die Iframe API Inhalte in einem <code>&lt;iframe&gt;</code>-Tag
+ auf deiner Seite. Auf diese Weise wird im Vergleich zu älteren 
+verfügbaren APIs eine größere Flexibilität erreicht, so dass YouTube für
+ Mobilgeräte, die Flash nicht unterstützen, statt eines Flash-Players 
+einen HTML5-Player anbieten kann.</p>
+
+<p>Mit den JavaScript-Funktionen der API kannst du Videos zu 
+Wiedergabelisten hinzufügen und diese Videos wiedergeben, pausieren oder
+ anhalten, die Lautstärke des Players einstellen oder Informationen zum 
+wiedergegebenen Video abrufen. Du kannst auch Ereignis-Listener 
+hinzufügen, die als Reaktion auf bestimmte Player-Ereignisse ausgeführt 
+werden, z.&nbsp;B. bei einer Änderung des Player-Status oder der 
+Wiedergabequalität des Videos.</p>
+
+<p>In dieser Anleitung werden die Verwendung der Iframe-API erklärt und 
+die verschiedenen Ereignistypen aufgeführt, die diese API versenden 
+kann. Außerdem erfährst du, wie Ereignis-Listener als Reaktion auf 
+solche Ereignisse geschrieben werden. Zudem werden sowohl die 
+verschiedenen JavaScript-Funktionen vorgestellt, die du aufrufen kannst,
+ um den Videoplayer zu steuern, als auch die Player-Parameter, mit denen
+ du den Player noch individueller gestalten kannst.</p>
+
+<h2 id="Requirements">Anforderungen<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+<p>Der Endnutzer muss einen Browser verwenden, der die HTML5-<code>postMessage</code>-Funktion unterstützt. Abgesehen von Internet Explorer&nbsp;7 wird <code>postMessage</code> von den meisten aktuellen Browsern unterstützt.</p><p>
+
+Eingebettete Player müssen einen Darstellungsbereich mit mindestens 
+200&nbsp;x&nbsp;200&nbsp;Pixel haben. Wenn die Steuerung angezeigt 
+wird,&nbsp;muss der Player groß genug sein, um die Steuerelemente 
+vollständig anzuzeigen, ohne dass der Darstellungsbereich dabei die 
+genannte Mindestgröße unterschreitet. Für 16:9-Player empfehlen wir eine
+ Breite von mindestens 480&nbsp;Pixel und eine Höhe von mindestens 
+270&nbsp;Pixel.
+
+
+</p><p>Webseiten, die die Iframe API verwenden, müssen auch die folgende JavaScript-Funktion implementieren:</p>
+<ul>
+  <li>
+    <p><code>onYouTubeIframeAPIReady</code> – Die API ruft diese 
+Funktion auf, wenn die Seite das Herunterladen von JavaScript für die 
+Player-API abgeschlossen hat. Anschließend kannst du die API auf deiner 
+Seite verwenden. Diese Funktion kann die Player-Objekte erstellen, die 
+beim Laden der Seite angezeigt werden sollen.</p>
+  </li>
+</ul>
+
+<h2 id="Getting_Started">Erste Schritte<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+
+<p>Die folgende HTML-Beispielseite erstellt einen eingebetteten Player, 
+der ein Video lädt, dieses sechs Sekunden lang wiedergibt und 
+anschließend die Wiedergabe stoppt. Die nummerierten Kommentare im 
+HTML-Code werden in der Liste unter dem Beispiel erklärt.</p>
+
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    
+    &lt;div id="player"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+      
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '360',
+          width: '640',
+          videoId: 'M7lc1UVf-VE',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING &amp;&amp; !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>In der folgenden Liste werden weitere Informationen zum obigen Beispiel bereitgestellt.</p>
+
+<ol>
+  <li>
+    <p>Das <code>&lt;div&gt;</code>-Tag in diesem Abschnitt gibt die 
+Stelle auf der Seite an, an der die Iframe API den Videoplayer 
+platziert. Der Konstruktor für das Player-Objekt, das im Abschnitt <a href="#Loading_a_Video_Player">Videoplayer laden</a> beschrieben wird, identifiziert das <code>&lt;div&gt;</code>-Tag anhand des <code>id</code>-Werts, um sicherzustellen, dass die API <code>&lt;iframe&gt;</code> an der richtigen Stelle platziert. Genauer gesagt ersetzt die Iframe API das <code>&lt;div&gt;</code>-Tag durch das <code>&lt;iframe&gt;</code>-Tag.</p>
+    <p>Alternativ kannst du das <code>&lt;iframe&gt;</code>-Element auch direkt auf der Seite platzieren. Wie das funktioniert, wird im Abschnitt <a href="#Loading_a_Video_Player">Videoplayer laden</a> beschrieben.</p>
+  </li>
+  <li>
+    <p>Der Code in diesem Abschnitt lädt den JavaScript-Code der Iframe 
+Player API. Im Beispiel wird der API-Code mithilfe einer DOM-Änderung 
+heruntergeladen, damit der Code asynchron abgerufen wird. Das <code>async</code>-Attribut des <code>&lt;script&gt;</code>-Tags, das zudem asynchrone Downloads ermöglicht, wird noch nicht von allen modernen Browsern unterstützt, wie dieser <a href="http://stackoverflow.com/a/1834129">Stack Overflow-Antwort</a> zu entnehmen ist.</p>
+  </li>
+  <li>
+    <p>Die <code>onYouTubeIframeAPIReady</code>-Funktion wird 
+ausgeführt, sobald der Player-API-Code heruntergeladen wird. Dieser Teil
+ des Codes definiert die globale Variable <code>player</code>, die auf den von dir eingebetteten Videoplayer verweist. Anschließend erstellt die Funktion das Videoplayer-Objekt.</p>
+  </li>
+  <li>
+    <p>Die <code>onPlayerReady</code>-Funktion wird bei Auslösung des <code>onReady</code>-Ereignisses
+ ausgeführt. In diesem Beispiel zeigt die Funktion an, dass die 
+Wiedergabe beginnen sollte, wenn der Videoplayer bereit ist.</p>
+  </li>
+  <li>
+    <p>Die API ruft die <code>onPlayerStateChange</code>-Funktion auf, 
+wenn sich der Status des Players ändert. Dies kann bedeuten, dass der 
+Player ein Video wiedergibt bzw. die Wiedergabe eines Videos 
+abgeschlossen hat, pausiert wird oder Ähnliches. Die Funktion zeigt an, 
+dass der Player das Video sechs Sekunden lang wiedergeben und 
+anschließend die <code>stopVideo</code>-Funktion aufrufen soll, um das Video anzuhalten, wenn sich der Player im Status <code>1</code> (wird wiedergegeben) befindet.</p>
+  </li>
+</ol>
+
+<h2 id="Loading_a_Video_Player">Videoplayer laden<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+<p>Nach dem Laden des JavaScript-Codes der API ruft die API die <code>onYouTubeIframeAPIReady</code>-Funktion auf. Du hast nun die Möglichkeit, ein <code>YT.Player</code>-Objekt zu erstellen und deiner Seite einen Videoplayer hinzuzufügen. Der folgende HTML-Ausschnitt zeigt die <code>onYouTubeIframeAPIReady</code>-Funktion aus dem obigen Beispiel:</p>
+<pre>var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '360',
+    width: '640',
+    videoId: 'M7lc1UVf-VE',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+</pre>
+
+<p>Der Konstruktor für den Videoplayer gibt die folgenden Parameter an:</p>
+<ol>
+  <li>
+    <p>Der erste Parameter gibt entweder das DOM-Element oder den <code>id</code>-Wert des HTML-Elements an, in dem die API das <code>&lt;iframe&gt;</code>-Tag hinzufügt, das den Player enthält.</p>
+    <p>Die Iframe API ersetzt das angegebene Element durch das <code>&lt;iframe&gt;</code>-Element,
+ das den Player enthält. Hierdurch könnte das Layout deiner Seite 
+beeinflusst werden, wenn das ersetzte Element über einen anderen 
+Anzeigestil verfügt als das eingefügte <code>&lt;iframe&gt;</code>-Element. Standardmäßig wird <code>&lt;iframe&gt;</code> als <code>inline-block</code>-Element angezeigt.</p>
+  </li>
+  <li>Beim zweiten Parameter handelt es sich um ein Objekt, das 
+Player-Optionen angibt. Das Objekt weist die folgenden Eigenschaften 
+auf:
+    <ul>
+      <li><code>width</code> (Zahl) – die Breite des Videoplayers. Der Standardwert ist <code>640</code>.</li>
+      <li><code>height</code> (Zahl) – die Höhe des Videoplayers. Der Standardwert ist <code>360</code>.</li>
+      <li><code itemprop="property">videoId</code> (String) – die YouTube-Video-ID, die das Video identifiziert, das der Player laden wird</li>
+      <li><code itemprop="property">playerVars</code> (Objekt) – Die Eigenschaften des Objekts geben <a href="https://developers.google.com/youtube/player_parameters.html?playerVersion=HTML5&amp;hl=de">Player-Parameter</a> an, die für die Anpassung des Players verwendet werden können.</li>
+      <li><code>events</code> (Objekt) – Die Eigenschaften des Objekts 
+geben die Ereignisse an, die von der API ausgelöst werden, und die 
+Funktionen (Ereignis-Listener), die von der API beim Eintreten dieser 
+Ereignisse aufgerufen werden. Im Beispiel zeigt der Konstruktor an, dass
+ bei Auslösung des <code>onReady</code>-Ereignisses die <code>onPlayerReady</code>-Funktion ausgeführt wird, und bei Auslösung des <code>onStateChange</code>-Ereignisses die <code>onPlayerStateChange</code>-Funktion.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Wie bereits im Abschnitt <a href="#Getting_Started">Erste Schritte</a> erwähnt, könntest du ein eigenes <code>&lt;iframe&gt;</code>-Tag erstellen, statt ein leeres <code>&lt;div&gt;</code>-Element auf deine Seite zu schreiben, das anschließend vom JavaScript-Code der Player-API durch ein <code>&lt;iframe&gt;</code>-Element ersetzt wird.</p>
+
+<pre>&lt;iframe id="player" type="text/html" width="640" height="360"
+  src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&amp;origin=http://example.com"
+  frameborder="0"&gt;&lt;/iframe&gt;</pre>
+
+<p>Wenn du das <code>&lt;iframe&gt;</code>-Tag schreibst, musst du beim Erstellen des <code>YT.Player</code>-Objekts weder Werte für <code>width</code> und <code>height</code> angeben, die als Attribute des <code>&lt;iframe&gt;</code>-Tags angegeben werden, noch <code>videoId</code> und Player-Parameter, die in der <code>src</code>-URL angegeben werden. Als zusätzliche Sicherheitsmaßnahme solltest du zudem der URL den <code>origin</code>-Parameter hinzufügen, der das URL-Schema (<code>http://</code> oder <code>https://</code>) und die vollständige Domain deiner Hostseite als Parameterwert angibt. Die Verwendung von <code>origin</code>
+ ist zwar optional, schützt das Element jedoch vor schädlichem 
+JavaScript-Code von Drittanbietern, der auf deiner Seite implementiert 
+werden und die Steuerung deines YouTube-Players übernehmen könnte.</p>
+
+<p>Im Abschnitt <a href="#Examples">Beispiele</a> findest du weitere Beispiele für die Erstellung von Videoplayer-Objekten.</p>
+
+
+<h2 id="Operations">Optionen<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+
+<p>Zum Aufrufen der Player-API-Methoden musst du zunächst eine Referenz 
+für das Player-Objekt erhalten, das du steuern möchtest. Du erhältst die
+ Referenz, indem du wie in den Abschnitten <a href="#Getting_Started">Erste Schritte</a> und <a href="#Loading_a_Video_Player">Videoplayer laden</a> dieses Dokuments beschrieben ein <code>YT.Player</code>-Objekt erstellst.</p>
+
+<h2 id="Functions">Funktionen<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+
+
+
+
+
+
+  <h3 id="Queueing_Functions">Wiedergabelisten-Funktionen</h3>
+
+  <p>Mit Wiedergabelisten-Funktionen kannst du Videos, Playlists sowie 
+andere Videolisten laden und wiedergeben. Wenn du zum Aufrufen dieser 
+Funktionen die unten beschriebene Objektsyntax verwendest, kannst du 
+auch eine Liste mit Suchergebnissen oder eine Nutzerliste hochgeladener 
+Videos laden oder in eine Wiedergabeliste aufnehmen.</p>
+
+  <p>Die API unterstützt zwei verschiedene Syntaxen zum Aufrufen der Wiedergabelisten-Funktionen.</p>
+  <ul>
+    <li>
+      <p>Für die Argumentsyntax müssen die Funktionsargumente in der vorgesehenen Reihenfolge aufgelistet werden.</p>
+    </li>
+    <li>
+      <p>Mit der Objektsyntax kannst du ein Objekt als einzelnen 
+Parameter zuweisen und Objekteigenschaften für die Funktionsargumente 
+definieren, die du festlegen möchtest. Darüber hinaus ist es möglich, 
+dass die API Funktionen unterstützt, die von der Argumentsyntax nicht 
+unterstützt werden.</p>
+    </li>
+  </ul>
+
+  <p>Die Funktion <code><a href="#loadVideoById">loadVideoById</a></code> kann beispielsweise auf eine der beiden folgenden Weisen aufgerufen werden. Beachte, dass die Objektsyntax die <code>endSeconds</code>-Eigenschaft unterstützt, die Argumentsyntax hingegen nicht.</p>
+
+  <ul>
+    <li>
+      <p><strong>Argumentsyntax</strong></p>
+      <pre><span>loadVideoById</span><span>(</span><span>"bHQqvYy5KYo"</span><span>,</span><span> </span><span>5</span><span>,</span><span> </span><span>"large"</span><span>)</span></pre>
+    </li>
+    <li>
+      <p><strong>Objektsyntax</strong></p>
+    <pre><span>loadVideoById</span><span>({</span><span>'videoId'</span><span>:</span><span> </span><span>'bHQqvYy5KYo'</span><span>,</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span>'startSeconds'</span><span>:</span><span> </span><span>5</span><span>,</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span>'endSeconds'</span><span>:</span><span> </span><span>60</span><span>,</span><span><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span>'suggestedQuality'</span><span>:</span><span> </span><span>'large'</span><span>});</span></pre>
+    </li>
+  </ul>
+
+    <h4 id="Video_Queueing_Functions">Wiedergabelisten-Funktionen für Videos</h4>
+
+      <dl>
+  <dt id="cueVideoById"><code itemprop="property">cueVideoById</code></dt>
+  <dd>
+    <ul>
+      <li>
+            <p><strong>Argumentsyntax</strong></p>
+        <pre>player.cueVideoById(videoId:String,
+                    startSeconds:Number,
+                    suggestedQuality:String):Void</pre>
+          </li>
+          <li>
+            <p><strong>Objektsyntax</strong></p>
+        <pre>player.cueVideoById({videoId:String,
+                     startSeconds:Number,
+                     endSeconds:Number,
+                     suggestedQuality:String}):Void</pre>
+          </li>
+        </ul>
+        <div>
+        <p>Diese Funktion lädt das Thumbnail des angegebenen Videos und 
+bereitet den Player auf die Wiedergabe des Videos vor. Die FLV-Datei 
+wird vom Player erst angefordert, wenn <code><a href="#playVideo">playVideo()</a></code> oder <code><a href="#seekTo">seekTo()</a></code> aufgerufen wird.</p>
+        <ul>
+          <li>Der erforderliche <code itemprop="property">videoId</code>-Parameter
+ gibt die YouTube-Video-ID des Videos an, das wiedergegeben werden soll.
+ In den Videofeeds der YouTube Data API wird die ID durch das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> angegeben.</li>
+          <li>Der optionale <code itemprop="property">startSeconds</code>-Parameter
+ akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des Videos gestartet werden soll, wenn <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du einen <code>startSeconds</code>-Wert angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, beginnt der Player die Wiedergabe bei dem im Aufruf <code><a href="#seekTo">seekTo()</a></code> angegebenen Zeitpunkt. Wenn das Video positioniert und bereit für die Wiedergabe ist, sendet der Player ein <a href="#getPlayerState"><code>video cued</code>-Ereignis</a> (<code>5</code>).</li>
+          <li>Der optionale <code itemprop="property">endSeconds</code>-Parameter,
+ der nur in der Objektsyntax unterstützt wird, akzeptiert eine 
+Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt an, zu dem die 
+Wiedergabe des Videos gestoppt werden soll, wenn <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du einen <code>endSeconds</code>-Wert angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, wird der <code>endSeconds</code>-Wert ignoriert.</li>
+          <li>Der optionale <code itemprop="property">suggestedQuality</code>-Parameter
+ gibt die empfohlene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</li>
+        </ul>
+      </div>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="loadVideoById"><p><code itemprop="property">loadVideoById</code></p></dt>
+      <dd>
+    <ul>
+      <li>
+        <p><strong>Argument syntax</strong></p>
+        <pre>player.loadVideoById(videoId:String,
+                     startSeconds:Number,
+                     suggestedQuality:String):Void</pre>
+      </li>
+      <li>
+        <p><strong>Object syntax</strong></p>
+        <pre>player.loadVideoById({videoId:String,
+                      startSeconds:Number,
+                      endSeconds:Number,
+                      suggestedQuality:String}):Void</pre>
+      </li>
+    </ul>
+        <div>
+        <p>Diese Funktion lädt das angegebene Video und gibt es wieder.</p>
+        <ul>
+          <li>Der erforderliche <code>videoId</code>-Parameter gibt die 
+YouTube-Video-ID des Videos an, das wiedergegeben werden soll. In den 
+Videofeeds der YouTube Data API wird die ID durch das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> angegeben.</li>
+          <li>Der optionale <code>startSeconds</code>-Parameter 
+akzeptiert eine Gleitkommazahl oder ganze Zahl. Wird sie angegeben, 
+beginnt das Video mit dem Keyframe, der dem angegebenen Zeitpunkt am 
+nächsten ist.</li>
+          <li>Der optionale <code>endSeconds</code>-Parameter akzeptiert
+ eine Gleitkommazahl oder ganze Zahl. Wird sie angegeben, wird die 
+Wiedergabe des Videos zum angegebenen Zeitpunkt beendet.</li>
+          <li>Der optionale <code>suggestedQuality</code>-Parameter gibt
+ die vorgeschlagene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</li>
+        </ul>
+    </div>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="cueVideoByUrl"><p><code itemprop="property">cueVideoByUrl</code></p></dt>
+      <dd>
+    <ul>
+      <li>
+        <p><strong>Argument syntax</strong></p>
+        <pre>player.cueVideoByUrl(mediaContentUrl:String,
+                     startSeconds:Number,
+                     suggestedQuality:String):Void</pre>
+      </li>
+      <li>
+        <p><strong>Object syntax</strong></p>
+        <pre>player.cueVideoByUrl({mediaContentUrl:String,
+                      startSeconds:Number,
+                      endSeconds:Number,
+                      suggestedQuality:String}):Void</pre>
+      </li>
+    </ul>
+    <div>
+        <p>Diese Funktion lädt das Thumbnail des angegebenen Videos und 
+bereitet den Player auf die Wiedergabe des Videos vor. Die FLV-Datei 
+wird vom Player erst angefordert, wenn <code><a href="#playVideo">playVideo()</a></code> oder <code><a href="#seekTo">seekTo()</a></code> aufgerufen wird.</p>
+        <ul>
+          <li>Der erforderliche <code itemprop="property">mediaContentUrl</code>-Parameter gibt eine vollqualifizierte YouTube-Player-URL im Format <code>http://www.youtube.com/v/VIDEO_ID?version=3</code> an. In YouTube Data API-Videofeeds enthält das <code>url</code>-Attribut des Tags <code><a href="https://developers.google.com/youtube/2.0/reference?hl=de#youtube_data_api_tag_media:content">&lt;media:content&gt;</a></code> eine vollqualifizierte Player-URL, wenn das <code>format</code>-Attribut des Tags den Wert <code>5</code> aufweist.</li>
+          <li>Der optionale <code>startSeconds</code>-Parameter 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des Videos gestartet werden soll, wenn <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du <code>startSeconds</code> angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, beginnt der Player die Wiedergabe bei dem Zeitpunkt, der im Aufruf <code><a href="#seekTo">seekTo()</a></code> angegeben wurde. Wenn das Video positioniert und bereit für die Wiedergabe ist, überträgt der Player ein <a href="#getPlayerState"><code>video cued</code>-Ereignis</a> (5).</li>
+          <li>Der optionale <code>endSeconds</code>-Parameter, der nur 
+in Objektsyntax unterstützt wird, akzeptiert eine Gleitkommazahl oder 
+ganze Zahl und gibt den Zeitpunkt an, zu dem das Video beendet werden 
+soll, wenn <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du einen <code>endSeconds</code>-Wert angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, wird der <code>endSeconds</code>-Wert ignoriert.</li>
+          <li>Der optionale <code>suggestedQuality</code>-Parameter gibt
+ die vorgeschlagene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</li>
+        </ul>
+    </div>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="loadVideoByUrl"><p><code itemprop="property">loadVideoByUrl</code></p></dt>
+      <dd>
+    <ul>
+      <li>
+        <p><strong>Argument syntax</strong></p>
+        <pre>player.loadVideoByUrl(mediaContentUrl:String,
+                      startSeconds:Number,
+                      suggestedQuality:String):Void</pre>
+      </li>
+      <li>
+        <p><strong>Object syntax</strong></p>
+        <pre>player.loadVideoByUrl({mediaContentUrl:String,
+                       startSeconds:Number,
+                       endSeconds:Number,
+                       suggestedQuality:String}):Void</pre>
+      </li>
+    </ul>
+    <div>
+        <p>Diese Funktion lädt das angegebene Video und gibt es wieder.</p>
+        <ul>
+          <li>Der erforderliche <code>mediaContentUrl</code>-Parameter gibt eine vollqualifizierte YouTube-Player-URL im Format <code>http://www.youtube.com/v/VIDEO_ID?version=3</code> an. In YouTube Data API-Videofeeds enthält das <code>url</code>-Attribut des Tags <code><a href="https://developers.google.com/youtube/2.0/reference?hl=de#youtube_data_api_tag_media:content">&lt;media:content&gt;</a></code> eine vollqualifizierte Player-URL, wenn das <code>format</code>-Attribut des Tags den Wert <code>5</code> aufweist.</li>
+          <li>Der optionale <code>startSeconds</code>-Parameter 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des Videos beginnen soll. Wird <code>startSeconds</code>
+ angegeben, wobei die Zahl eine Gleitkommazahl sein kann, beginnt das 
+Video mit dem Keyframe, der dem angegebenen Zeitpunkt am nächsten ist.</li>
+          <li>Der optionale <code>endSeconds</code>-Parameter, der nur 
+in Objektsyntax unterstützt wird, akzeptiert eine Gleitkommazahl oder 
+ganze Zahl und gibt den Zeitpunkt an, zu dem die Wiedergabe des Videos 
+beendet werden soll.</li>
+          <li>Der optionale <code>suggestedQuality</code>-Parameter gibt
+ die vorgeschlagene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</li>
+        </ul>
+    </div>
+      </dd>
+</dl>
+
+    <h4 id="Playlist_Queueing_Functions">Wiedergabelisten-Funktionen für Listen</h4>
+
+    <p>Mit den Funktionen <code>cuePlaylist</code> und <code>loadPlaylist</code>
+ kannst du deine Playlist oder Videoliste laden und wiedergeben. Wenn du
+ zum Aufrufen dieser Funktionen die Objektsyntax verwendest, kannst du 
+zudem eine Liste der Suchergebnisse oder eine Nutzerliste hochgeladener 
+Videos einer Wiedergabeliste hinzufügen oder laden.</p>
+    <p>Die Arbeitsweise der Funktionen richtet sich danach, ob sie mit 
+der Argument- oder der Objektsyntax aufgerufen werden. Die beiden 
+Methoden werden im Folgenden beschrieben.</p>
+
+<dl>
+  <dt id="cuePlaylist"><code itemprop="property">cuePlaylist</code></dt>
+  <dd id="cuePlaylistDescription">
+    <ul>
+      <li>
+        <p><strong>Argument syntax</strong></p>
+        <pre>player.cuePlaylist(playlist:String|Array,
+                   index:Number,
+                   startSeconds:Number,
+                   suggestedQuality:String):Void</pre>
+        Fügt die angegebene Playlist der Wiedergabeliste hinzu. Wenn die
+ Playlist positioniert und bereit für die Wiedergabe ist, sendet der 
+Player ein <a href="#getPlayerState"><code>video cued</code>-Ereignis</a> (<code>5</code>).
+          <ul>
+            <li>
+              <p>Der erforderliche <code itemprop="property">playlist</code>-Parameter gibt ein Array der YouTube-Video-IDs an. In YouTube Data API-Feeds gibt das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> eine Video-ID an.</p>
+            </li>
+            <li>
+              <p>Der optionale <code itemprop="property">index</code>-Parameter
+ gibt den Index des ersten Videos der Playlist an, das wiedergegeben 
+wird. Der Parameter verwendet einen nullbasierten Index und der 
+Standardparameterwert lautet <code>0</code>. Standardmäßig wird also das erste Video der Playlist geladen und wiedergegeben.</p>
+            </li>
+            <li>
+              <p>Der optionale <code>startSeconds</code>-Parameter 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des ersten Videos der Playlist beginnen soll,
+ wenn die Funktion <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du einen <code>startSeconds</code>-Wert angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, beginnt der Player die Wiedergabe bei dem im Aufruf <code><a href="#seekTo">seekTo()</a></code> angegebenen Zeitpunkt. Wenn du eine Playlist positionierst und anschließend die Funktion <code><a href="#playVideoAt">playVideoAt()</a></code> aufrufst, beginnt der Player die Wiedergabe am Anfang des angegebenen Videos.</p>
+            </li>
+            <li>
+              <p>Der optionale <code>suggestedQuality</code>-Parameter 
+gibt die vorgeschlagene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</p>
+            </li>
+          </ul>
+
+      </li>
+      <li>
+        <p><strong>Objektsyntax</strong></p>
+        <pre>player.cuePlaylist({listType:String,
+                    list:String,
+                    index:Number,
+                    startSeconds:Number,
+                    suggestedQuality:String}):Void</pre>
+        Fügt die angegebene Videoliste der Wiedergabeliste hinzu. Bei 
+dieser Liste kann es sich um eine Playlist, einen Suchergebnis-Feed oder
+ einen Feed zu einer Nutzerliste mit hochgeladenen Videos handeln. Wenn 
+die Liste positioniert und bereit für die Wiedergabe ist, sendet der 
+Player ein <a href="#getPlayerState"><code>video cued</code>-Ereignis</a> (<code>5</code>).
+          <ul>
+            <li>
+              <p>Die optionale <code itemprop="property">listType</code>-Eigenschaft gibt den Ergebnistyp-Feed an, den du abrufst. Gültige Werte sind <code>playlist</code>, <code>search</code> und <code>user_uploads</code>. Der Standardwert ist <code>playlist</code>.</p>
+            </li>
+            <li>
+              <p>Die erforderliche <code itemprop="property">list</code>-Eigenschaft enthält einen Schlüssel zum Angeben der spezifischen Videoliste, die von YouTube zurückgegeben werden soll.</p>
+              <ul>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code>playlist</code> lautet, gibt die <code>list</code>-Eigenschaft die Playlist-ID oder ein Array von Video-IDs an. In YouTube Data API-Feeds gibt das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:playlistid">&lt;yt:playlistid&gt;</a></code> eine Playlist-ID und das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> eine Video-ID an.</li>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code>search</code> lautet, gibt die <code>list</code>-Eigenschaft die Suchanfrage an.</li>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code itemprop="property">user_uploads</code> lautet, gibt die <code>list</code>-Eigenschaft den Nutzer an, dessen hochgeladene Videos zurückgegeben werden.</li>
+              </ul>
+            </li>
+            <li>
+              <p>Die optionale <code>index</code>-Eigenschaft gibt den 
+Index des ersten Videos in der Liste an, das wiedergegeben wird. Der 
+Parameter verwendet einen nullbasierten Index und der 
+Standardparameterwert lautet <code>0</code>. Standardmäßig wird also das erste Video der Liste geladen und wiedergegeben.</p>
+            </li>
+            <li>
+              <p>Die optionale <code>startSeconds</code>-Eigenschaft 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des ersten Videos der Liste beginnen soll, 
+wenn die Funktion <code><a href="#playVideo">playVideo()</a></code> aufgerufen wird. Wenn du einen <code>startSeconds</code>-Wert angibst und anschließend <code><a href="#seekTo">seekTo()</a></code> aufrufst, beginnt der Player die Wiedergabe bei dem im Aufruf <code><a href="#seekTo">seekTo()</a></code> angegebenen Zeitpunkt. Wenn du eine Liste positionierst und anschließend die Funktion <code><a href="#playVideoAt">playVideoAt()</a></code> aufrufst, beginnt der Player die Wiedergabe am Anfang des angegebenen Videos.</p>
+            </li>
+            <li>
+              <p>Die optionale <code>suggestedQuality</code>-Eigenschaft
+ gibt die empfohlene Wiedergabequalität für die Videoliste an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </dd>
+  </dl>
+
+      <dl>
+  <dt id="loadPlaylist"><code itemprop="property">loadPlaylist</code></dt>
+  <dd id="loadPlaylistDescription">
+    <ul>
+      <li>
+        <p><strong>Argument syntax</strong></p>
+        <pre>player.loadPlaylist(playlist:String|Array,
+                    index:Number,
+                    startSeconds:Number,
+                    suggestedQuality:String):Void</pre>
+        Diese Funktion lädt die angegebene Playlist und gibt sie wieder.
+          <ul>
+            <li>
+              <p>Der erforderliche <code>playlist</code>-Parameter gibt ein Array der YouTube-Video-IDs an. In YouTube Data API-Feeds gibt das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> eine Video-ID an.</p>
+            </li>
+            <li>
+              <p>Der optionale <code>index</code>-Parameter gibt den 
+Index des ersten Videos der Playlist an, das wiedergegeben wird. Der 
+Parameter verwendet einen nullbasierten Index und der 
+Standardparameterwert lautet <code>0</code>. Standardmäßig wird also das erste Video der Playlist geladen und wiedergegeben.</p>
+            </li>
+            <li>
+              <p>Der optionale <code>startSeconds</code>-Parameter 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem die Wiedergabe des ersten Videos der Playlist beginnen soll.</p>
+            </li>
+            <li>
+              <p>Der optionale <code>suggestedQuality</code>-Parameter 
+gibt die vorgeschlagene Wiedergabequalität für das Video an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</p>
+            </li>
+          </ul>
+      </li>
+      <li>
+        <p><strong>Object syntax</strong></p>
+        <pre>player.loadPlaylist({list:String,
+                     listType:String,
+                     index:Number,
+                     startSeconds:Number,
+                     suggestedQuality:String}):Void</pre>
+        Diese Funktion lädt die angegebene Liste und gibt sie wieder. 
+Bei dieser Liste kann es sich um eine Playlist, einen Suchergebnis-Feed 
+oder einen Feed zu einer Nutzerliste mit hochgeladenen Videos handeln.
+          <ul>
+            <li>
+              <p>Die optionale <code>listType</code>-Eigenschaft gibt den Suchergebnis-Feed an, den du abrufst. Gültige Werte sind <code>playlist</code>, <code>search</code> und <code>user_uploads</code>. Der Standardwert ist <code>playlist</code>.</p>
+            </li>
+            <li>
+              <p>Die erforderliche <code>list</code>-Eigenschaft enthält einen Schlüssel, der die spezifische Videoliste angibt, die YouTube zurückgeben soll.</p>
+              <ul>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code>playlist</code> lautet, gibt die <code>list</code>-Eigenschaft eine Playlist-ID oder ein Array von Video-IDs an. In YouTube Data API-Feeds gibt das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:playlistid">&lt;yt:playlistid&gt;</a></code> eine Playlist-ID und das Tag <code><a href="https://developers.google.com/youtube/reference?hl=de#youtube_data_api_tag_yt:videoid">&lt;yt:videoid&gt;</a></code> eine Video-ID an.</li>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code>search</code> lautet, gibt die <code>list</code>-Eigenschaft die Suchanfrage an.</li>
+                <li>Wenn der <code>listType</code>-Eigenschaftswert <code>user_uploads</code> lautet, gibt die <code>list</code>-Eigenschaft den Nutzer an, dessen hochgeladene Videos zurückgegeben werden.</li>
+              </ul>
+            </li>
+            <li>
+              <p>Die optionale <code>index</code>-Eigenschaft gibt den 
+Index des ersten Videos in der Liste an, das wiedergegeben wird. Der 
+Parameter verwendet einen nullbasierten Index und der 
+Standardparameterwert lautet <code>0</code>. Standardmäßig wird also das erste Video der Liste geladen und wiedergegeben.</p>
+            </li>
+            <li>
+              <p>Die optionale <code>startSeconds</code>-Eigenschaft 
+akzeptiert eine Gleitkommazahl oder ganze Zahl und gibt den Zeitpunkt 
+an, bei dem das erste Video der Liste wiedergegeben werden soll.</p>
+            </li>
+            <li>
+              <p>Die optionale <code>suggestedQuality</code>-Eigenschaft
+ gibt die empfohlene Wiedergabequalität für die Videoliste an. Weitere 
+Informationen zur Wiedergabequalität findest du in der Definition der 
+Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality</a></code>.</p>
+            </li>
+          </ul>
+      </li>
+    </ul>
+  </dd>
+</dl>
+
+  <h3 id="Playback_controls">Wiedergabesteuerung und Player-Einstellungen</h3>
+    <h4 id="video-wiedergeben">Video wiedergeben</h4>
+
+      <dl>
+      <dt id="playVideo"><code>player.<span itemprop="property">playVideo</span>():Void</code></dt>
+      <dd>Gibt das derzeit positionierte/geladene Video wieder. Der letzte Player-Status nach der Ausführung dieser Funktion ist <code>playing</code> (1).<p><strong>Hinweis:</strong>
+ Eine Wiedergabe wird nur dann als offizieller Videoaufruf gezählt, wenn
+ sie über eine eigene Wiedergabeschaltfläche des Players ausgelöst wird.</p></dd>
+</dl>
+
+      <dl>
+      <dt id="pauseVideo"><code>player.<span itemprop="property">pauseVideo</span>():Void</code></dt>
+      <dd>Pausiert das derzeit wiedergegebene Video. Der letzte Player-Status nach der Ausführung dieser Funktion ist <code>paused</code> (<code>2</code>). Dies gilt nicht, wenn sich der Player beim Abrufen der Funktion im Status <code>ended</code> (<code>0</code>) befindet. In diesem Fall ändert sich der Status des Players nicht.</dd>
+</dl>
+
+      <dl>
+      <dt id="stopVideo"><code>player.<span itemprop="property">stopVideo</span>():Void</code></dt>
+      <dd>Stoppt das Laden des aktuellen Videos und bricht den Vorgang 
+ab. Diese Funktion ist für Ausnahmefälle gedacht, in denen du weißt, 
+dass sich der Nutzer mit dem Player keine weiteren Videos ansehen wird. 
+Wenn du das Video pausieren möchtest, solltest du einfach die Funktion <code><a href="#pauseVideo">pauseVideo</a></code>
+ aufrufen. Wenn du das Video ändern möchtest, das der Player wiedergibt,
+ kannst du direkt eine der Wiedergabelisten-Funktionen aufrufen, ohne 
+zunächst <code>stopVideo</code> aufzurufen.<p>
+        <strong>Wichtig</strong>: Im Unterschied zur Funktion <code><a href="#pauseVideo">pauseVideo</a></code>, bei der der Player den Status <code>paused</code> (<code>2</code>) beibehält, könnte die <code>stopVideo</code>-Funktion den Player in einen Status ohne Wiedergabe versetzen, darunter <code>ended</code> (<code>0</code>), <code>paused</code> (<code>2</code>), <code>video cued</code> (<code>5</code>) oder <code>unstarted</code> (<code>-1</code>).</p></dd>
+</dl>
+
+      <dl>
+      <dt id="seekTo"><code>player.<span itemprop="property">seekTo</span>(seconds:Number, allowSeekAhead:Boolean):Void</code></dt>
+      <dd>Sucht im Video nach einem bestimmten Zeitpunkt. Wenn der 
+Player beim Aufrufen der Funktion pausiert, pausiert er weiter. Wird die
+ Funktion bei einem anderen Status wie z.&nbsp;B. <code>playing</code> oder <code>video cued</code> aufgerufen, gibt der Player das Video wieder.
+        <ul>
+          <li>
+            <p>Der <code itemprop="property">seconds</code>-Parameter gibt den Zeitpunkt an, zu dem der Player springen soll.</p>
+            <p>Der Player springt zum nächsten Keyframe vor dem 
+angegebenen Zeitpunkt. Dies gilt nicht, wenn der Player bereits den Teil
+ des Videos heruntergeladen hat, nach dem der Nutzer sucht. In diesem 
+Fall springt der Player gemäß der <code>seek()</code>-Methode des <code>NetStream</code>-Objekts
+ des Flash-Players zum nächsten Keyframe vor oder nach dem festgelegten 
+Zeitpunkt. Weitere Informationen findest du in der <a href="http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/net/NetStream.html#seek()">Dokumentation von Adobe</a>.</p>
+          </li>
+          <li>
+            <p>Der <code itemprop="property">allowSeekAhead</code>-Parameter bestimmt, ob der Player eine neue Anfrage an den Server sendet, wenn der <code>seconds</code>-Parameter einen Zeitpunkt angibt, der außerhalb der derzeit gepufferten Videodaten liegt.</p>
+            <p> Wir empfehlen, dass du diesen Parameter auf <code>false</code> setzt, wenn der Nutzer die Maus eine Videofortschrittsleiste entlangzieht, und ihn anschließend auf <code>true</code>
+ setzt, wenn der Nutzer die Maus wieder loslässt. Auf diese Weise kann 
+ein Nutzer zu verschiedenen Stellen eines Videos scrollen, ohne neue 
+Videostreams anzufordern, indem er an nicht gepufferten Stellen des 
+Videos vorbeiscrollt. Wenn der Nutzer die Maustaste loslässt, springt 
+der Player an die gewünschte Stelle des Videos und fordert bei Bedarf 
+einen neuen Videostream an.</p>
+          </li>
+        </ul>
+      </dd>
+</dl>
+
+  
+      <dl>
+      <dt id="clearVideo"><code>player.<span itemprop="property">clearVideo</span>():Void</code></dt>
+      <dd id="clearVideoDescription">Löscht die Videoanzeige. Diese Funktion ist nützlich, wenn du nach dem Aufrufen von <code>stopVideo()</code> den Rest des Videos löschen möchtest. Diese Funktion wird seit der <a href="https://developers.google.com/youtube/flash_api_reference?hl=de">ActionScript 3.0 Player API</a> nicht mehr unterstützt.</dd>
+</dl>
+
+
+    <h4 id="video-in-einer-playlist-wiedergeben">Video in einer Playlist wiedergeben</h4>
+      <dl>
+      <dt id="nextVideo"><code>player.<span itemprop="property">nextVideo</span>():Void</code></dt>
+      <dd>Diese Funktion lädt das nächste Video der Playlist und gibt es wieder.
+        <ul>
+          <li>
+            <p>Wenn während der Wiedergabe des letzten Videos der Playlist <code>player.nextVideo()</code> aufgerufen wird und die Playlist auf fortlaufende Wiedergabe (<code><a href="#setLoop">loop</a></code>) eingestellt ist, lädt der Player das erste Video der Liste und spielt es ab.</p>
+          </li>
+          <li>
+            <p>Wenn während der Wiedergabe des letzten Videos der Playlist <code>player.nextVideo()</code> aufgerufen wird und die Playlist nicht auf fortlaufende Wiedergabe eingestellt ist, wird die Wiedergabe beendet.</p>
+          </li>
+        </ul>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="previousVideo"><code>player.<span itemprop="property">previousVideo</span>():Void</code></dt>
+      <dd>Diese Funktion lädt das vorherige Video der Playlist und gibt es wieder.
+        <ul>
+          <li>
+            <p>Wenn <code>player.previousVideo()</code> während der Wiedergabe des ersten Videos der Playlist aufgerufen wird und die Playlist auf fortlaufende Wiedergabe (<code><a href="#setLoop">loop</a></code>) eingestellt ist, lädt der Player das letzte Video der Liste und gibt es wieder.</p>
+          </li>
+          <li>
+            <p>Wenn während der Wiedergabe des ersten Videos der Playlist <code>player.previousVideo()</code>
+ aufgerufen wird und die Playlist nicht auf fortlaufende Wiedergabe 
+eingestellt ist, startet der Player das erste Video der Playlist noch 
+einmal von vorn.</p>
+          </li>
+        </ul>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="playVideoAt"><code>player.<span itemprop="property">playVideoAt</span>(index:Number):Void</code></dt>
+      <dd>Diese Funktion lädt das angegebene Video der Playlist und gibt es wieder.
+        <ul>
+          <li>
+            <p>Der erforderliche <code>index</code>-Parameter gibt den 
+Index des Videos an, das du in der Playlist wiedergeben möchtest. Der 
+Parameter verwendet einen nullbasierten Index, sodass das erste Video 
+der Liste durch den Wert <code>0</code> identifiziert wird. Wenn du die Playlist als <a href="#setShuffle">Zufallsmix</a> wiedergibst, gibt diese Funktion das Video an der angegebenen Position des Zufallsmix wieder.</p>
+          </li>
+        </ul>
+      </dd>
+</dl>
+
+    <h4 id="player-lautst%C3%A4rke-%C3%A4ndern">Player-Lautstärke ändern</h4>
+      <dl>
+      <dt id="mute"><code>player.<span itemprop="property">mute</span>():Void</code></dt>
+      <dd>Schaltet den Player stumm</dd>
+</dl>
+
+      <dl>
+      <dt id="unMute"><code>player.<span itemprop="property">unMute</span>():Void</code></dt>
+      <dd>Hebt die Stummschaltung des Players auf</dd>
+</dl>
+
+      <dl>
+      <dt id="isMuted"><code>player.<span itemprop="property">isMuted</span>():Boolean</code></dt>
+      <dd>Gibt <code>true</code> zurück, wenn der Player stummgeschaltet wurde, und <code>false</code>, wenn nicht</dd>
+</dl>
+
+      <dl>
+      <dt id="setVolume"><code>player.<span itemprop="property">setVolume</span>(volume:Number):Void</code></dt>
+      <dd>Stellt die Lautstärke ein. Akzeptiert eine ganze Zahl zwischen <code>0</code> und <code>100</code></dd>
+</dl>
+
+      <dl>
+      <dt id="getVolume"><code>player.<span itemprop="property">getVolume</span>():Number</code></dt>
+      <dd>Gibt die aktuelle Lautstärke des Players wieder, eine ganze Zahl zwischen <code>0</code> und <code>100</code>. <code>getVolume()</code> gibt die Lautstärke selbst dann zurück, wenn der Player stummgeschaltet ist.</dd>
+</dl>
+
+  
+    <h4 id="player-gr%C3%B6%C3%9Fe-festlegen">Player-Größe festlegen</h4>
+      <dl>
+      
+      
+      <dt id="setSize"><code>player.setSize(width:Number, height:Number):Object</code></dt>
+      <dd>Legt die Größe von <code>&lt;iframe&gt;</code> als maximale Größe des Players in Pixeln fest</dd>
+
+      </dl>
+
+
+
+  <h4 id="Playback_rate">Wiedergaberate festlegen</h4>
+
+      <dl>
+    <dt id="getPlaybackRate"><code>player.<span itemprop="property">getPlaybackRate</span>():Number</code></dt>
+    <dd>Diese Funktion ruft die Wiedergaberate des derzeit wiedergegebenen Videos ab. Die Standardwiedergaberate beträgt <code>1</code>,
+ wodurch angezeigt wird, dass das Video mit einer normalen 
+Geschwindigkeit wiedergegeben wird. Wiedergaberaten können Werte wie <code>0.25</code>, <code>0.5</code>, <code>1</code>, <code>1.5</code> und <code>2</code> aufweisen.</dd>
+</dl>
+
+      <dl>
+    <dt id="setPlaybackRate"><code>player.<span itemprop="property">setPlaybackRate</span>(suggestedRate:Number):Void</code></dt>
+    <dd>Diese Funktion stellt die empfohlene Wiedergaberate für das 
+aktuelle Video ein. Wenn sich die Wiedergaberate ändert, ändert sie sich
+ nur für das Video, das bereits positioniert ist oder wiedergegeben 
+wird. Wenn du die Wiedergaberate für ein positioniertes Video festlegst,
+ ist diese Rate auch dann aktiv, wenn die <code>playVideo</code>-Funktion
+ aufgerufen wird oder der Nutzer die Wiedergabe direkt über die 
+Steuerung des Players beginnt. Außerdem wird durch das Aufrufen von 
+Funktionen zum Positionieren oder Laden von Videos oder Playlists 
+(z.&nbsp;B. <code>cueVideoById</code>, <code>loadVideoById</code>) die Wiedergaberate auf <code>1</code> zurückgesetzt.<p>
+        Durch das Aufrufen dieser Funktion wird nicht gewährleistet, 
+dass sich die Wiedergaberate tatsächlich ändert. Sollte sich die 
+Wiedergaberate allerdings ändern, wird das Ereignis <code><a href="#onPlaybackRateChange">onPlaybackRateChange</a></code> ausgelöst und dein Code sollte auf das Ereignis und nicht auf die Tatsache reagieren, dass die <code>setPlaybackRate</code>-Funktion aufgerufen wurde.</p><p>
+        Die Methode <code><a href="#getAvailablePlaybackRates">getAvailablePlaybackRates</a></code> gibt die möglichen Wiedergaberaten für das derzeit wiedergegebene Video zurück. Wenn du den <code>suggestedRate</code>-Parameter
+ jedoch auf eine nicht unterstützte ganze Zahl oder Gleitkommazahl 
+setzt, rundet der Player diesen Wert auf den nächsten unterstützten Wert
+ in Richtung <code>1</code> ab.
+    </p></dd>
+</dl>
+
+
+      <dl>
+    <dt id="getAvailablePlaybackRates"><code>player.<span itemprop="property">getAvailablePlaybackRates</span>():Array</code></dt>
+    <dd>Diese Funktion gibt die Wiedergaberaten zurück, die für das aktuelle Video verfügbar sind. Der Standardwert lautet <code>1</code> und zeigt an, dass das Video in normaler Geschwindigkeit wiedergegeben wird.<p>
+        Die Funktion gibt ein Array von Zahlen zurück, die nach 
+ansteigender Wiedergabegeschwindigkeit sortiert sind. Selbst wenn der 
+Player keine variablen Wiedergabegeschwindigkeiten unterstützt, sollte 
+das Array der Zahlen mindestens einen Wert enthalten (<code>1</code>).</p></dd>
+</dl>
+
+    <h4 id="wiedergabeverhalten-f%C3%BCr-playlists-festlegen">Wiedergabeverhalten für Playlists festlegen</h4>
+      <dl>
+      <dt id="setLoop"><code>player.<span itemprop="property">setLoop</span>(loopPlaylists:Boolean):Void</code></dt>
+      <dd>
+        <p>Diese Funktion zeigt an, ob der Videoplayer eine Playlist 
+fortlaufend wiedergeben oder die Wiedergabe nach dem letzten Video der 
+Playlist beenden soll. Playlists werden standardmäßig nicht als 
+Schleifen gespielt.</p>
+        <p>Diese Einstellung bleibt auch dann aktiv, wenn du eine andere
+ Playlist lädst oder positionierst. Wenn du also eine Playlist lädst, 
+die <code>setLoop</code>-Funktion mit dem Wert <code>true</code> aufrufst und anschließend eine zweite Playlist lädst, wird auch die zweite Playlist als Schleife gespielt.</p>
+
+            <p>Der erforderliche <code itemprop="property">loopPlaylists</code>-Parameter gibt das Schleifenverhalten an.</p>
+            <ul>
+              <li>
+                <p>Wenn der Parameterwert <code>true</code> lautet, gibt
+ der Videoplayer Playlists fortlaufend wieder. Nach der Wiedergabe des 
+letzten Videos einer Playlist setzt der Videoplayer die Wiedergabe mit 
+dem ersten Video der Playlist fort.</p>
+              </li>
+              <li>
+                <p>Wenn der Parameterwert <code>false</code> lautet, werden Wiedergaben beendet, nachdem der Videoplayer das letzte Video einer Playlist wiedergegeben hat.</p>
+              </li>
+            </ul>
+      </dd>
+</dl>
+
+      <dl>
+      <dt id="setShuffle"><code>player.<span itemprop="property">setShuffle</span>(shufflePlaylist:Boolean):Void</code></dt>
+      <dd>
+        <p>Diese Funktion zeigt an, ob die Videos einer Playlist als 
+Zufallsmix wiedergegeben werden sollen, sodass sie in einer anderen 
+Reihenfolge als der vom Playlist-Ersteller vorgesehenen wiedergegeben 
+werden. Wenn du eine Playlist als Zufallsmix wiedergeben möchtest, 
+nachdem die Wiedergabe bereits gestartet wurde, wird die Reihenfolge der
+ Liste geändert, während die Wiedergabe des aktuellen Videos fortgesetzt
+ wird. Das nächste Video wird dann gemäß der neuen Liste ausgewählt.</p>
+        <p>Diese Einstellung wird nicht beibehalten, wenn du eine andere
+ Playlist lädst oder positionierst. Wenn du also eine Playlist lädst, 
+die <code>setShuffle</code>-Funktion aufrufst und anschließend eine zweite Playlist lädst, wird die zweite Playlist nicht als Zufallsmix wiedergegeben.</p>
+            <p>Der erforderliche <code itemprop="property">shufflePlaylist</code>-Parameter gibt an, ob YouTube die Playlist als Zufallsmix wiedergeben soll.</p>
+            <ul>
+              <li>
+                <p>Wenn der Parameterwert <code>true</code> lautet, 
+erstellt YouTube die Reihenfolge der Playlist nach dem Zufallsprinzip. 
+Wenn du die Funktion anweist, eine bereits nach dem Zufallsprinzip 
+gemischte Playlist erneut nach dem Zufallsprinzip zu mischen, erstellt 
+YouTube eine neue Reihenfolge nach dem Zufallsprinzip.</p>
+              </li>
+              <li>
+                <p>Wenn der Parameterwert <code>false</code> lautet, stellt YouTube die ursprüngliche Playlist-Reihenfolge wieder her.</p>
+              </li>
+            </ul>
+      </dd>
+</dl>
+
+  <h3 id="Playback_status">Wiedergabestatus</h3>
+      <dl>
+    <dt id="getVideoLoadedFraction"><code>player.<span itemprop="property">getVideoLoadedFraction</span>():Float</code></dt>
+    <dd>Gibt eine Zahl zwischen <code>0</code> und <code>1</code> 
+zurück, die den prozentualen Anteil des Videos angibt, den der Player 
+als gepuffert anzeigt. Diese Methode gibt eine zuverlässigere Zahl 
+zurück als die mittlerweile veralteten Methoden <code><a href="#getVideoBytesLoaded">getVideoBytesLoaded</a></code> und <code><a href="#getVideoBytesTotal">getVideoBytesTotal</a></code>.</dd>
+</dl>
+
+      <dl>
+    <dt id="getPlayerState"><code>player.getPlayerState():Number</code></dt>
+    <dd>Gibt den Status des Players zurück. Mögliche Werte sind folgende:<br>
+        <ul>
+          <li><code>-1</code> – nicht gestartet</li>
+          <li><code>0</code> – beendet</li>
+          <li><code>1</code> – wird wiedergegeben</li>
+          <li><code>2</code> – pausiert</li>
+          <li><code>3</code> – wird gepuffert</li>
+          <li><code>5</code> – Video positioniert</li>
+        </ul>
+    </dd>
+</dl>
+
+      <dl>
+    <dt id="getCurrentTime"><code>player.<span itemprop="property">getCurrentTime</span>():Number</code></dt>
+    <dd>Gibt die seit dem Beginn der Wiedergabe des Videos vergangene Zeit in Sekunden an</dd>
+</dl>
+
+      <dl>
+    <dt id="getVideoStartBytes"><code>player.<span itemprop="property">getVideoStartBytes</span>():Number</code></dt>
+    <dd><span>Wird seit dem 31.&nbsp;Oktober 2012 nicht mehr unterstützt.</span> Gibt die Anzahl der Bytes zurück, die die Videodatei bereits geladen hat. Diese Methode gibt nun immer den Wert <code>0</code>
+ zurück. Beispielszenario: Der Nutzer springt zu einer Stelle des 
+Videos, die noch nicht geladen wurde, und der Player erstellt eine neue 
+Anfrage für die Wiedergabe eines Videosegments, das noch nicht geladen 
+wurde.</dd>
+</dl>
+
+    <dl>
+      <dt id="getVideoBytesLoaded"><code>player.<span itemprop="property">getVideoBytesLoaded</span>():Number</code></dt>
+      <dd>
+        <span>Wird seit dem 18.&nbsp;Juli 2012 nicht mehr unterstützt.</span> Verwende stattdessen die Methode <code><a href="#getVideoLoadedFraction">getVideoLoadedFraction</a></code>, um den prozentualen Anteil des Videos zu bestimmen, der bereits gepuffert wurde.<p>
+      
+      
+      Diese Methode gibt einen Wert zwischen <code>0</code> und <code>1000</code>
+ zurück, der den Teil des Videos schätzt, der bereits geladen wurde. Du 
+könntest den bereits geladenen Teil des Videos berechnen, indem du den <code>getVideoBytesLoaded</code>-Wert durch den <code>getVideoBytesTotal</code>-Wert teilst.
+
+      </p></dd>
+    </dl>
+
+    <dl>
+      <dt id="getVideoBytesTotal"><code>player.<span itemprop="property">getVideoBytesTotal</span>():Number</code></dt>
+      <dd>
+        <span>Wird seit dem 18.&nbsp;Juli 2012 nicht mehr unterstützt.</span> Verwende stattdessen die Methode <code><a href="#getVideoLoadedFraction">getVideoLoadedFraction</a></code>, um den prozentualen Anteil des Videos zu bestimmen, der bereits gepuffert wurde.<p>
+      Gibt die Größe des derzeit geladenen/wiedergegebenen Videos in Bytes oder eine Schätzung der Größe des Videos zurück</p><p>
+      
+      
+      Diese Methode gibt immer einen Wert von <code>1000</code> zurück. Du könntest den bereits geladenen Teil des Videos berechnen, indem du den <code>getVideoBytesLoaded</code>-Wert durch den <code>getVideoBytesTotal</code>-Wert teilst.
+
+      </p></dd>
+    </dl>
+
+  <h3 id="Playback_quality">Wiedergabequalität</h3>
+
+      <dl>
+    <dt id="getPlaybackQuality"><code>player.<span itemprop="property">getPlaybackQuality</span>():String</code></dt>
+    <dd>Diese Funktion ruft die tatsächliche Videoqualität des aktuellen Videos ab. Mögliche Rückgabewerte sind <code>highres</code>, <code>hd1080</code>, <code>hd720</code>, <code>large</code>, <code>medium</code> und <code>small</code>. Es wird auch <code>undefined</code> zurückgegeben, wenn kein aktuelles Video vorhanden ist.</dd>
+</dl>
+
+      <dl>
+    <dt id="setPlaybackQuality"><code>player.<span itemprop="property">setPlaybackQuality</span>(suggestedQuality:String):Void</code></dt>
+    <dd>Diese Funktion legt die empfohlene Videoqualität für das 
+aktuelle Video fest. Sie bewirkt, dass das Video an der aktuellen 
+Position mit der neuen Qualität erneut geladen wird. Wenn sich die 
+Wiedergabequalität ändert, ändert sie sich nur für das gerade 
+wiedergegebene Video. Durch das Aufrufen dieser Funktion wird nicht 
+gewährleistet, dass sich die Wiedergabequalität tatsächlich ändert. 
+Sollte sich die Wiedergabequalität allerdings ändern, wird das Ereignis <code><a href="#onPlaybackQualityChange">onPlaybackQualityChange</a></code> ausgelöst und dein Code sollte auf das Ereignis und nicht auf die Tatsache reagieren, dass die <code>setPlaybackQuality</code>-Funktion aufgerufen wurde.<p>
+        Der <code itemprop="property">suggestedQuality</code>-Parameterwert kann <code>small</code>, <code>medium</code>, <code>large</code>, <code>hd720</code>, <code>hd1080</code>, <code>highres</code> oder <code>default</code> lauten. Wir empfehlen, dass du den Parameterwert auf <code>default</code>
+ setzt. Hierdurch wird YouTube angewiesen, die am besten geeignete 
+Wiedergabequalität auszuwählen, die sich nach Nutzer, Video, System und 
+anderen Wiedergabebedingungen richtet.</p><p>
+        Wenn du eine Wiedergabequalität für ein Video vorschlägst, wird 
+die vorgeschlagene Qualität nur für das jeweilige Video aktiviert. Du 
+solltest eine Wiedergabequalität auswählen, die zur Größe deines 
+Videoplayers passt. Wenn auf deiner Seite beispielsweise ein Videoplayer
+ mit einer Größe von 1280&nbsp;x&nbsp;720&nbsp;Pixel angezeigt wird, 
+sieht ein Video mit einer Qualität von <code>hd720</code> besser aus als ein Video mit einer Qualität von <code>hd1080</code>. Wir empfehlen das Aufrufen der <code>getAvailableQualityLevels()</code>-Funktion, um zu bestimmen, welche Stufen für ein Video zur Verfügung stehen.</p><p>
+        In der unten stehenden Liste werden die Stufen für die 
+Wiedergabequalität gezeigt, die sich auf verschiedene Standardgrößen von
+ Playern beziehen. Wir empfehlen, dass du die Höhe des Players auf einen
+ der unten aufgelisteten Werte setzt und die Größe deines Players auf 
+die Verwendung eines Seitenverhältnisses von 16:9 ausrichtest. Wie 
+bereits oben erwähnt, empfehlen wir bei Auswahl einer 
+Standard-Player-Größe, dass du den <code>suggestedQuality</code>-Parameterwert auf <code>default</code> setzt, damit YouTube die am besten geeignete Wiedergabequalität auswählen kann.
+        </p><ul>
+          <li>Qualitätsstufe <code>small</code>: Die Player-Höhe beträgt
+ 240&nbsp;Pixel und die Abmessungen betragen mindestens 
+320&nbsp;x&nbsp;240&nbsp;Pixel für ein Seitenverhältnis von 4:3.</li>
+          <li>Qualitätsstufe <code>medium</code>: Die Player-Höhe 
+beträgt 360&nbsp;Pixel und die Abmessungen betragen 
+640&nbsp;x&nbsp;360&nbsp;Pixel für ein Seitenverhältnis von 16:9 sowie 
+480&nbsp;x&nbsp;360&nbsp;Pixel für ein Seitenverhältnis von 4:3.</li>
+          <li>Qualitätsstufe <code>large</code>: Die Player-Höhe beträgt
+ 480&nbsp;Pixel und die Abmessungen betragen 
+853&nbsp;x&nbsp;480&nbsp;Pixel für ein Seitenverhältnis von 16:9 sowie 
+640&nbsp;x&nbsp;480&nbsp;Pixel für ein Seitenverhältnis von 4:3.</li>
+          <li>Qualitätsstufe <code>hd720</code>: Die Player-Höhe beträgt
+ 720&nbsp;Pixel und die Abmessungen betragen 
+1280&nbsp;x&nbsp;720&nbsp;Pixel für ein Seitenverhältnis von 16:9 sowie 
+960&nbsp;x&nbsp;720&nbsp;Pixel für ein Seitenverhältnis von 4:3.</li>
+          <li>Qualitätsstufe <code>hd1080</code>: Die Player-Höhe 
+beträgt 1080&nbsp;Pixel und die Abmessungen betragen 
+1920&nbsp;x&nbsp;1080&nbsp;Pixel für ein Seitenverhältnis von 16:9 sowie
+ 1440&nbsp;x&nbsp;1080&nbsp;Pixel für ein Seitenverhältnis von 4:3.</li>
+          <li>Qualitätsstufe <code>highres</code>: Die Player-Höhe ist 
+größer als 1080&nbsp;Pixel. Hieraus ergibt sich, dass das 
+Seitenverhältnis des Players größer als 1920&nbsp;x&nbsp;1080&nbsp;Pixel
+ ist.</li>
+          <li>Qualitätsstufe <code>default</code>: YouTube wählt die 
+geeignete Wiedergabequalität aus. Durch diese Einstellung wird die 
+Qualitätsstufe auf den Standardwert zurückgesetzt. Alle vorherigen 
+Versuche, die Wiedergabequalität mithilfe der Funktionen <code><a href="#cueVideoById">cueVideoById</a></code>, <code><a href="#loadVideoById">loadVideoById</a></code> oder <code>setPlaybackQuality</code> festzulegen, werden rückgängig gemacht.</li>
+        </ul>
+        Wenn du die <code>setPlaybackQuality</code>-Funktion mit einer <code>suggestedQuality</code>-Stufe
+ aufrufst, die für das Video nicht verfügbar ist, wird die Qualität auf 
+die nächstniedrigere verfügbare Stufe eingestellt. Wenn du 
+beispielsweise die Qualitätsstufe <code>large</code> anforderst und diese nicht verfügbar ist, wird die Wiedergabequalität auf <code>medium</code> gesetzt, sofern diese Stufe verfügbar ist.<p> Außerdem ist eine Einstellung von <code>suggestedQuality</code> auf einen Wert, der nicht als Qualitätsstufe erkannt wird, gleichbedeutend mit einer Einstellung von <code>suggestedQuality</code> auf <code>default</code>.</p></dd>
+</dl>
+
+
+      <dl>
+    <dt id="getAvailableQualityLevels"><code>player.<span itemprop="property">getAvailableQualityLevels</span>():Array</code></dt>
+    <dd>Diese Funktion gibt die Qualitätsformate zurück, in denen das 
+aktuelle Video verfügbar ist. Du könntest mithilfe dieser Funktion 
+bestimmen, ob das Video in einer höheren Qualität verfügbar ist als 
+jene, die der Nutzer gerade für die Wiedergabe verwendet. Dein Player 
+könnte eine Schaltfläche oder ein anderes Element anzeigen, damit der 
+Nutzer die Qualität entsprechend anpassen kann.<p>
+        Die Funktion gibt verschiedene Strings zurück, die nach 
+abnehmender Qualität sortiert sind. Mögliche Array-Elementwerte sind <code>highres</code>, <code>hd1080</code>, <code>hd720</code>, <code>large</code>, <code>medium</code> und <code>small</code>. Diese Funktion gibt ein leeres Array zurück, wenn kein aktuelles Video vorhanden ist.</p><p>
+        Dein Client sollte nicht automatisch zur höchsten oder 
+niedrigsten Videoqualität oder zu einem unbekannten Formatnamen 
+wechseln. YouTube könnte die Liste der Qualitätsstufen erweitern und 
+Formate aufnehmen, die unter Umständen für deinen Player-Kontext nicht 
+geeignet sind. Ebenso könnte YouTube Optionen entfernen, sodass die dem 
+Nutzer gebotene Qualität möglicherweise beeinträchtigt wird. Wenn dein 
+Client nur zu bekannten verfügbaren Formaten wechselt, wird die 
+Client-Leistung weder durch die Einführung neuer Qualitätsstufen noch 
+durch das Entfernen von Qualitätsstufen beeinflusst, die für deinen 
+Player-Kontext nicht geeignet sind.</p></dd>
+</dl>
+
+  <h3 id="Retrieving_video_information">Videoinformationen abrufen</h3>
+
+      <dl>
+    <dt id="getDuration"><code>player.<span itemprop="property">getDuration</span>():Number</code></dt>
+    <dd>Gibt die Dauer des derzeit wiedergegebenen Videos in Sekunden an. <code>getDuration()</code> gibt so lange <code>0</code> zurück, bis die Metadaten des Videos geladen sind. Dies ist in der Regel direkt nach dem Beginn der Wiedergabe der Fall.<p>
+        Wenn es sich bei dem gerade wiedergegebenen Video um eine <a href="https://developers.google.com/youtube/2.0/developers_guide_protocol_retrieving_live_events?hl=de">Liveveranstaltung</a> handelt, gibt die <code>getDuration()</code>-Funktion
+ die seit dem Start des Live-Videostreams vergangene Zeit zurück. Genau 
+genommen handelt es sich hierbei um die Zeit, die das Video gestreamt 
+wurde, ohne zurückgesetzt oder unterbrochen zu werden. Außerdem ist 
+diese Zeit in der Regel länger als die tatsächliche Veranstaltung, da 
+das Streaming bereits vor dem Start der Veranstaltung beginnen kann.</p></dd>
+</dl>
+
+      <dl>
+    <dt id="getVideoUrl"><code>player.<span itemprop="property">getVideoUrl</span>():String</code></dt>
+    <dd id="getVideoUrlDescription">Gibt die YouTube.com-URL für das derzeit geladene/wiedergegebene Video zurück</dd>
+</dl>
+
+      <dl>
+    <dt id="getVideoEmbedCode"><code>player.<span itemprop="property">getVideoEmbedCode</span>():String</code></dt>
+    <dd id="getVideoEmbedCodeDescription">Gibt den eingebetteten Code für das derzeit geladene/wiedergegebene Video zurück</dd>
+</dl>
+
+
+  <h3 id="Retrieving_playlist_information">Playlist-Informationen abrufen</h3>
+
+      <dl>
+    <dt id="getPlaylist"><code>player.<span itemprop="property">getPlaylist</span>():Array</code></dt>
+    <dd>Diese Funktion gibt ein Array von Video-IDs in der Playlist in 
+der aktuellen Reihenfolge zurück. Standardmäßig gibt diese Funktion 
+Video-IDs in der Reihenfolge zurück, die vom Playlist-Eigentümer 
+festgelegt wurde. Wenn du allerdings die Funktion <code><a href="#setShuffle">setShuffle</a></code> aufgerufen hast, um die Playlist als Zufallsmix wiederzugeben, spiegelt der Rückgabewert der <code>getPlaylist()</code>-Funktion die Reihenfolge des Zufallsmix wieder.</dd>
+</dl>
+
+      <dl>
+    <dt id="getPlaylistIndex"><code>player.<span itemprop="property">getPlaylistIndex</span>():Number</code></dt>
+    <dd>Diese Funktion gibt den Index des Playlist-Videos zurück, das gerade wiedergegeben wird.
+      <ul>
+        <li>
+          <p>Wenn du die Playlist nicht als Zufallsmix wiedergibst, gibt
+ der Rückgabewert die Position an, an der der Ersteller der Playlist das
+ Video platziert hat. Der Rückgabewert verwendet einen nullbasierten 
+Index, sodass das erste Video in der Playlist durch den Wert <code>0</code> identifiziert wird.</p>
+        </li>
+        <li>
+          <p>Wenn du die Playlist als Zufallsmix wiedergibst, gibt der 
+Rückgabewert die Position des Videos innerhalb der Playlist an, die als 
+Zufallsmix wiedergegeben wird.</p>
+        </li>
+      </ul>
+    </dd>
+</dl>
+
+  
+
+  
+  <h3 id="Adding_event_listener">Ereignis-Listener hinzufügen oder entfernen</h3>
+      <dl>
+    <dt id="addEventListener"><code>player.<span itemprop="property">addEventListener</span>(event:String, listener:String):Void</code></dt>
+    <dd>Fügt eine Listener-Funktion für das angegebene <code>event</code>-Element hinzu. Der unten stehende Abschnitt <a href="#Events">Ereignisse</a>
+ gibt die unterschiedlichen Ereignisse an, die durch den Player 
+ausgelöst werden können. Beim Listener handelt es sich um einen String, 
+der die Funktion festlegt, die bei Auslösung des angegebenen Ereignisses
+ ausgeführt wird.</dd>
+</dl>
+      <dl>
+    <dt id="removeEventListener"><code>player.<span itemprop="property">removeEventListener</span>(event:String, listener:String):Void</code></dt>
+    <dd>Entfernt eine Listener-Funktion für das angegebene <code>event</code>-Element. Bei <code>listener</code>
+ handelt es sich um einen String, der die Funktion festlegt, die bei 
+Auslösung des angegebenen Ereignisses nicht mehr ausgeführt wird.</dd>
+</dl>
+
+
+  
+  <h3 id="Accessing_and_Modifying_DOM_Nodes">DOM-Knoten aufrufen und ändern</h3>
+    <dl>
+      <dt id="getIframe"><code>player.<span itemprop="property">getIframe</span>():Object</code></dt>
+      <dd id="getIframeDescription">Diese Methode gibt den DOM-Knoten für das eingebettete <code>&lt;iframe&gt;</code>-Element zurück.</dd>
+    </dl>
+
+    <dl>
+      <dt id="destroy"><code>player.<span itemprop="property">destroy</span>():Void</code></dt>
+      <dd>Entfernt das <code>&lt;iframe&gt;</code>-Element, das den Player enthält</dd>
+    </dl>
+
+
+<h2 id="Events">Ereignisse<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+
+<p>Die API löst Ereignisse aus, um deine Anwendung über Änderungen am 
+eingebetteten Player zu informieren. Wie im vorigen Abschnitt erwähnt, 
+kannst du Ereignisse abonnieren, indem du beim <a href="#Loading_a_Video_Player">Erstellen des <code>YT.Player</code>-Objekts</a> einen Ereignis-Listener verwendest. Du kannst außerdem die Funktion <code><a href="#addEventListener">addEventListener</a></code> verwenden.</p>
+
+<p>Die API leitet ein Ereignisobjekt als einzelnes Argument an die 
+jeweiligen Funktionen weiter. Das Ereignisobjekt weist die folgenden 
+Eigenschaften auf:</p>
+<ul>
+  <li>Das <code>target</code>-Element des Ereignisses gibt den Videoplayer an, der sich auf das Ereignis bezieht.</li>
+  <li>Das <code>data</code>-Element des Ereignisses gibt einen relevanten Wert für das Ereignis an. Das <code>onReady</code>-Ereignis gibt keine <code>data</code>-Eigenschaft an.</li>
+</ul>
+
+<p>In der folgenden Liste werden die Ereignisse definiert, die von der API ausgelöst werden:</p>
+
+
+<dl>
+  <dt id="onReady"><code itemprop="property">onReady</code></dt>
+    <dd>Dieses Ereignis wird immer dann ausgelöst, wenn ein Player einen
+ Ladevorgang abgeschlossen hat und bereit ist, API-Aufrufe zu empfangen.
+ Deine Anwendung sollte diese Funktion implementieren, wenn du bestimmte
+ Vorgänge wie das Wiedergeben eines Videos oder das Anzeigen von 
+Informationen zum Video ausführen möchtest, sobald der Player bereit 
+ist.<p>Im folgenden Beispiel wird eine Funktion zum Verarbeiten dieses 
+Ereignisses gezeigt. Das Ereignisobjekt, das von der API an die Funktion
+ weitergeleitet wird, verfügt über eine <code>target</code>-Eigenschaft,
+ die den Player angibt. Die Funktion ruft den eingebetteten Code für das
+ derzeit geladene Video ab, beginnt die Wiedergabe des Videos und zeigt 
+den eingebetteten Code in dem Seitenelement an, das den <code>id</code>-Wert <code>embed-code</code> aufweist.
+      </p><pre>function onPlayerReady(event) {
+  var embedCode = event.target.<a href="#getVideoEmbedCode">getVideoEmbedCode()</a>;
+  event.target.playVideo();
+  if (document.getElementById('embed-code')) {
+    document.getElementById('embed-code').innerHTML = embedCode;
+  }
+}
+</pre>
+    </dd>
+</dl>
+
+
+<dl>
+  <dt id="onStateChange"><code itemprop="property">onStateChange</code></dt>
+    <dd>Dieses Ereignis wird immer dann ausgelöst, wenn sich der Status des Players ändert.
+      
+      
+      Die <code>data</code>-Eigenschaft des Ereignisobjekts, das die API
+ an deine Ereignis-Listener-Funktion weiterleitet, gibt eine ganze Zahl 
+an, die dem neuen Player-Status entspricht.
+
+      Mögliche Werte sind folgende:
+      <ul>
+        <li><code>-1</code> (nicht gestartet)</li>
+        <li><code>0</code> (beendet)</li>
+        <li><code>1</code> (wird wiedergegeben)</li>
+        <li><code>2</code> (pausiert)</li>
+        <li><code>3</code> (wird gepuffert)</li>
+        <li><code>5</code> (Video positioniert)</li>
+      </ul>
+    Wenn der Player zuerst ein Video lädt, sendet er ein Ereignis <code>unstarted</code> (<code>-1</code>). Wenn ein Video positioniert und bereit für die Wiedergabe ist, sendet der Player ein Ereignis <code>video cued</code> (<code>5</code>). In deinem Code kannst du ganze Zahlen als Werte angeben oder eine der folgenden Namespace-Variablen verwenden:
+      <ul>
+        <li><code>YT.PlayerState.ENDED</code></li>
+        <li><code>YT.PlayerState.PLAYING</code></li>
+        <li><code>YT.PlayerState.PAUSED</code></li>
+        <li><code>YT.PlayerState.BUFFERING</code></li>
+        <li><code>YT.PlayerState.CUED</code></li>
+      </ul>
+    </dd>
+</dl>
+
+<dl>
+  <dt id="onPlaybackQualityChange"><code itemprop="property">onPlaybackQualityChange</code></dt>
+    <dd>Dieses Ereignis wird immer dann ausgelöst, wenn sich die 
+Qualität der Videowiedergabe ändert. Wenn du beispielsweise die Funktion
+ <code><a href="#setPlaybackQuality">setPlaybackQuality(suggestedQuality)</a></code>
+ aufrufst, wird dieses Ereignis ausgelöst, wenn sich die 
+Wiedergabequalität tatsächlich ändert. Deine Anwendung sollte auf das 
+Ereignis reagieren und nicht annehmen, dass sich die Qualität 
+automatisch ändert, wenn die Funktion <code><a href="#setPlaybackQuality">setPlaybackQuality(suggestedQuality)</a></code>
+ aufgerufen wird. Ebenso sollte dein Code nicht annehmen, dass sich die 
+Wiedergabequalität ausschließlich als Ergebnis eines expliziten Aufrufs 
+von <code>setPlaybackQuality</code> oder einer anderen Funktion ändert, die dir ermöglicht, eine empfohlene Wiedergabequalität festzulegen.<p>
+    
+    
+    Beim <code>data</code>-Eigenschaftswert des Ereignisobjekts, das die
+ API an die Ereignis-Listener-Funktion weiterleitet, handelt es sich um 
+einen String, der die neue Wiedergabequalität angibt.
+
+      Mögliche Werte sind folgende:
+      </p><ul>
+        <li><code>small</code></li>
+        <li><code>medium</code></li>
+        <li><code>large</code></li>
+        <li><code>hd720</code></li>
+        <li><code>hd1080</code></li>
+        <li><code>highres</code></li>
+      </ul>
+    </dd>
+</dl>
+
+<dl>
+  <dt id="onPlaybackRateChange"><code itemprop="property">onPlaybackRateChange</code></dt>
+    <dd>Dieses Ereignis wird immer dann ausgelöst, wenn sich die Videowiedergaberate ändert. Wenn du beispielsweise die Funktion <code><a href="#setPlaybackRate">setPlaybackRate(suggestedRate)</a></code>
+ aufrufst, wird dieses Ereignis ausgelöst, wenn sich die Wiedergaberate 
+tatsächlich ändert. Deine Anwendung sollte auf das Ereignis reagieren 
+und nicht annehmen, dass sich die Wiedergaberate automatisch ändert, 
+wenn die Funktion <code><a href="#setPlaybackRate">setPlaybackRate(suggestedRate)</a></code>
+ aufgerufen wird. Ebenso sollte dein Code nicht annehmen, dass sich die 
+Videowiedergaberate nur als Ergebnis eines ausdrücklichen Aufrufs von <code>setPlaybackRate</code> ändert.<p>
+    
+    
+    Beim <code>data</code>-Eigenschaftswert des Ereignisobjekts, den die
+ API an die Ereignis-Listener-Funktion weiterleitet, handelt es sich um 
+eine Zahl, die die neue Wiedergaberate angibt.
+
+    Die Methode <code><a href="#getAvailablePlaybackRates">getAvailablePlaybackRates</a></code> gibt eine Liste gültiger Wiedergaberaten für das derzeit positionierte oder wiedergegebene Video zurück.
+    </p></dd>
+</dl>
+
+<dl>
+  <dt id="onError"><code itemprop="property">onError</code></dt>
+    <dd>Dieses Ereignis wird ausgelöst, wenn im Player ein Fehler auftritt.
+    
+    
+    Die API leitet das <code>event</code>-Objekt an die Ereignis-Listener-Funktion weiter. Die <code>data</code>-Eigenschaft dieses Objekts gibt eine ganze Zahl an, die den aufgetretenen Fehlertyp identifiziert.
+
+    Mögliche Werte sind folgende:
+      <ul>
+        <li><code>2</code> – Die Anfrage enthält einen ungültigen 
+Parameterwert. Dieser Fehler tritt beispielsweise auf, wenn du eine 
+Video-ID angibst, die nicht aus elf Zeichen besteht, oder wenn die 
+Video-ID ungültige Zeichen wie z.&nbsp;B. Ausrufezeichen oder Sternchen 
+enthält.</li>
+
+        <li><code>5</code> – Der angeforderte Inhalt kann nicht mit 
+einem HTML5-Player wiedergegeben werden oder es ist ein anderer Fehler 
+im Zusammenhang mit dem HTML5-Player aufgetreten.</li>
+
+        <li><code>100</code> – Der angeforderte Video wurde nicht 
+gefunden. Dieser Fehler tritt auf, wenn ein Video aus irgendeinem Grund 
+entfernt oder als privat markiert wurde.</li>
+        <li><code>101</code> – Der Rechteinhaber des angeforderten Videos untersagt die Wiedergabe des Videos in eingebetteten Playern.</li>
+        <li><code>150</code> – Dieser Fehler ist mit <code>101</code> identisch. Es handelt sich eigentlich um einen <code>101</code>-Fehler.</li>
+      </ul>
+    </dd>
+</dl>
+
+<dl>
+  <dt id="onApiChange"><code itemprop="property">onApiChange</code></dt>
+    <dd>Dieses Ereignis wird ausgelöst, um anzuzeigen, dass der Player 
+ein Modul mit eingeblendeten API-Methoden geladen oder entladen hat. 
+Deine Anwendung kann dieses Ereignis erkennen und anschließend den 
+Player abfragen, um festzustellen, welche Optionen für das kürzlich 
+geladene Modul zur Verfügung stehen. Danach kann deine Anwendung die für
+ diese Optionen vorhandenen Einstellungen abrufen oder aktualisieren.<p>
+        Der folgende Befehl ruft ein Array von Modulnamen ab, für die du Player-Optionen festlegen kannst.</p><pre>player.getOptions();</pre>
+        Gegenwärtig handelt es sich beim <code>cc</code>-Modul, das Untertitel im Player verarbeitet, um das einzige Modul, für das du Optionen festlegen kannst. Beim Empfangen eines <code>onApiChange</code>-Ereignisses kann deine Anwendung über den folgenden Befehl bestimmen, welche Optionen für das <code>cc</code>-Modul festgelegt werden können:<br>
+        <pre>player.getOptions('cc');</pre>
+        Durch das Abfragen des Players mit diesem Befehl kannst du 
+bestätigen, dass auf die Optionen, auf die du zugreifen möchtest, auch 
+tatsächlich zugegriffen werden kann. Moduloptionen werden mit den 
+folgenden Befehlen abgerufen und aktualisiert:<br>
+        <pre><strong>Option abrufen</strong>
+<span>player.getOption(<strong>module</strong>, <strong>option</strong>);</span>
+
+<strong>Option festlegen</strong>
+<span>player.setOption(<strong>module</strong>, <strong>option</strong>, <strong>value</strong>);</span></pre>
+
+        In der folgenden Tabelle werden die von der API unterstützten Optionen aufgelistet:<div><table>
+          <tbody><tr>
+            <th>Modul</th>
+            <th>Option</th>
+            <th>Beschreibung</th>
+          </tr>
+          <tr>
+            <td itemprop="property">cc</td>
+            <td itemprop="property">fontSize</td>
+            <td>Diese Option passt die Schriftgröße der im Player angezeigten Untertitel an.<p>Gültige Werte sind <code><span>-1</span></code>, <code><span>0</span></code>, <code><span>1</span></code>, <code><span>2</span></code> und <code><span>3</span></code>. Die Standardgröße ist <code><span>0</span></code>, die kleinste Größe <code><span>-1</span></code>. Durch das Einstellen dieser Option auf eine ganze Zahl, die kleiner als <code><span>-1</span></code> ist, wird die kleinste Untertitelgröße angezeigt. Das Einstellen auf eine ganze Zahl, die größer als <code><span>3</span></code> ist, bewirkt, dass die größte Untertitelgröße angezeigt wird.</p></td>
+          </tr>
+          <tr>
+            <td>cc</td>
+            <td itemprop="property">reload</td>
+            <td>Diese Option lädt die Untertiteldaten für das wiedergegebene Video erneut. Der Wert lautet <code><span>null</span></code>, wenn du den Wert der Option abrufst. Setze den Wert auf <code><span>true</span></code>, um die Untertiteldaten erneut zu laden.</td>
+          </tr>
+        </tbody></table></div>
+  </dd>
+</dl>
+
+<h2 id="Mobile_considerations">Überlegungen zu Mobilgeräten<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+<h3 id="Autoplay_and_scripted_playback">Autoplay- und Skriptwiedergabe</h3>
+<p>Das HTML5-<code>&lt;video&gt;</code>-Element lässt in bestimmten 
+mobilen Browsern wie z.&nbsp;B. Chrome und Safari die Wiedergabe nur 
+dann zu, wenn sie durch eine Interaktion des Nutzers initiiert wird, 
+z.&nbsp;B. durch das Tippen auf den Player. Folgendes ist ein Auszug aus
+ der <a href="https://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/Using_HTML5_Audio_Video/AudioandVideoTagBasics/AudioandVideoTagBasics.html">Apple-Dokumentation</a>:</p>
+
+<p>"Warnung: Um unerwünschte Downloads über mobile Netzwerke auf Kosten 
+des Nutzers zu verhindern, können mit Safari für iOS keine eingebetteten
+ Medien automatisch wiedergegeben werden. Die Wiedergabe muss immer vom 
+Nutzer initiiert werden."</p>
+
+<p>Aus diesem Grund können Funktionen und Parameter wie z.&nbsp;B. <code>autoplay</code>, <code>playVideo()</code> und <code>loadVideoById()</code> nicht in allen mobilen Umgebungen verwendet werden.</p>
+
+<h2 id="Examples">Beispiele<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+<h3 id="Example_Video_Player_Constructors"><span>YT.Player</span>-Objekte erstellen</h3>
+
+<ul>
+  <li>
+    <p><strong>Beispiel 1: Laute Wiedergabe</strong></p>
+    <p>In diesem Beispiel wird ein Videoplayer mit einer Größe von 
+1280&nbsp;x&nbsp;720&nbsp;Pixel erstellt. Anschließend ruft der 
+Ereignis-Listener für das <code>onReady</code>-Ereignis die Funktion <code><a href="#setVolume">setVolume</a></code> auf, um für die Lautstärke die höchstmögliche Einstellung auszuwählen.</p>
+    <pre>function onYouTubeIframeAPIReady() {
+  var player;
+  player = new YT.Player('player', {
+    width: 1280,
+    height: 720,
+    videoId: 'M7lc1UVf-VE',
+    events: {
+      'onReady': onPlayerReady,
+      'onPlaybackQualityChange': onPlayerPlaybackQualityChange,
+      'onStateChange': onPlayerStateChange,
+      'onError': onPlayerError
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  event.target.setVolume(100);
+  event.target.playVideo();
+}
+</pre>
+  </li>
+
+  <li>
+    <p><strong>Beispiel 2:</strong> In diesem Beispiel werden die 
+Player-Parameter so festgelegt, dass das Video beim Laden automatisch 
+wiedergegeben und die Steuerung des Videoplayers ausgeblendet wird. 
+Außerdem werden Ereignis-Listener für alle Ereignisse hinzugefügt, die 
+von der API gesendet werden.</p>
+    <pre>function onYouTubeIframeAPIReady() {
+  var player;
+  player = new YT.Player('player', {
+    videoId: 'M7lc1UVf-VE',
+    playerVars: { 'autoplay': 1, 'controls': 0 },
+    events: {
+      'onReady': onPlayerReady,
+      'onPlaybackQualityChange': onPlayerPlaybackQualityChange,
+      'onStateChange': onPlayerStateChange,
+      'onError': onPlayerError
+    }
+  });
+}</pre>
+  </li>
+</ul>
+
+<h2 id="Revision_History">Überarbeitungsverlauf<a href="#top_of_page" data-title="Zurück nach oben"></a></h2>
+
+<p>Dieser Abschnitt enthält Änderungen der YouTube Iframe Player API und Aktualisierungen der Dokumentation. <a href="https://developers.google.com/youtube/feeds/iframe-player-api-revision-history.xml?hl=de">Dieses Änderungsprotokoll abonnieren</a> <a href="https://developers.google.com/youtube/feeds/iframe-player-api-revision-history.xml?hl=de"><img alt="Abonnieren" src="YouTube%20Player%20API%20Reference%20for%20iframe%20Embeds%20%20%20YouTube%20Iframe-API-Dateien/rss-o16.png"></a></p>
+
+<div>
+
+<h3 id="april-28,-2014">April 28, 2014</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The new <a href="#removeEventListener">removeEventListener</a> function lets you remove a listener for a specified event.</p>
+  </li>
+</ul>
+
+<h3 id="march-25,-2014">March 25, 2014</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Requirements">Requirements</a> section has been 
+updated to note that embedded players must have a viewport that is at 
+least 200px by 200px. If a player displays controls, it must be large 
+enough to fully display the controls without shrinking the viewport 
+below the minimum size. We recommend 16:9 players be at least 480 pixels
+ wide and 270 pixels tall.</p>
+  </li>
+</ul>
+
+<h3 id="july-23,-2013">July 23, 2013</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Overview">Overview</a> now includes a video of a 2011 Google I/O presentation that discusses the iframe player.</p>
+  </li>
+</ul>
+
+<h3 id="october-31,-2012">October 31, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Queueing_Functions">Queueing functions</a> section 
+has been updated to explain that you can use either argument syntax or 
+object syntax to call all of those functions. Note that the API may 
+support additional functionality in object syntax that the argument 
+syntax does not support.</p>
+    <p>In addition, the descriptions and examples for each of the <a href="#Video_Queueing_Functions">video queueing functions</a> have been updated to reflect the newly added support for object syntax. (The API's <a href="#Playlist_Queueing_Functions">playlist queueing functions</a> already supported object syntax.)</p>
+  </li>
+  <li>
+    <p>When called using object syntax, each of the <a href="#Video_Queueing_Functions">video queueing functions</a> supports an <code>endSeconds</code> property, which accepts a float/integer and specifies the time when the video should stop playing when <code><a href="#playVideo">playVideo()</a></code> is called.</p>
+  </li>
+  <li>
+    <p>The <code><a href="#getVideoStartBytes">getVideoStartBytes</a></code> method has been deprecated. The method now always returns a value of <code>0</code>.</p>
+  </li>
+</ul>
+
+<h3 id="august-22,-2012">August 22, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The example in the <a href="#Loading_a_Video_Player">Loading a video player</a> section that demonstrates how to manually create the <code>&lt;iframe&gt;</code> tag has been updated to include a closing <code>&lt;/iframe&gt;</code> tag since the <code>onYouTubeIframeAPIReady</code> function is only called if the closing <code>&lt;/iframe&gt;</code> element is present.</p>
+  </li>
+</ul>
+
+<h3 id="august-6,-2012">August 6, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Operations">Operations</a> section has been expanded to list all of the supported API functions rather than linking to the <a href="https://developers.google.com/youtube/js_api_reference.html?hl=de">JavaScript Player API Reference</a> for that list.</p>
+  </li>
+  <li>
+    <p>The API supports several new functions and one new event that can be used to control the video playback speed:</p>
+    <ul>
+      <li>
+        <p><strong>Functions</strong></p>
+        <ul>
+          <li><code><a href="#getAvailablePlaybackRates">getAvailablePlaybackRates</a></code>
+ – Retrieve the supported playback rates for the cued or playing video. 
+Note that variable playback rates are currently only supported in the 
+HTML5 player.</li>
+          <li><code><a href="#getPlaybackRate">getPlaybackRate</a></code> – Retrieve the playback rate for the cued or playing video.</li>
+          <li><code><a href="#setPlaybackRate">setPlaybackRate</a></code> – Set the playback rate for the cued or playing video.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Events</strong></p>
+        <ul>
+          <li><code><a href="#onPlaybackRateChange">onPlaybackRateChange</a></code> – This event fires when the video's playback rate changes.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<h3 id="july-19,-2012">July 19, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The new <code><a href="#getVideoLoadedFraction">getVideoLoadedFraction</a></code> method replaces the now-deprecated <code><a href="#getVideoBytesLoaded">getVideoBytesLoaded</a></code> and <code><a href="#getVideoBytesTotal">getVideoBytesTotal</a></code> methods. The new method returns the percentage of the video that the player shows as buffered.</p>
+  </li>
+  <li>
+    <p>The <code><a href="#onError">onError</a></code> event may now return an error code of <code>5</code>,
+ which indicates that the requested content cannot be played in an HTML5
+ player or another error related to the HTML5 player has occurred.</p>
+  </li>
+  <li>
+    <p>The <a href="#Requirements">Requirements</a> section has been updated to indicate that any web page using the IFrame API must also implement the <code>onYouTubeIframeAPIReady</code> function. Previously, the section indicated that the required function was named <code>onYouTubePlayerAPIReady</code>. Code samples throughout the document have also been updated to use the new name.</p>
+
+    <p><strong>Note:</strong> To ensure that this change does not break 
+existing implementations, both names will work. If, for some reason, 
+your page has an <code>onYouTubeIframeAPIReady</code> function and an <code>onYouTubePlayerAPIReady</code> function, both functions will be called, and the <code>onYouTubeIframeAPIReady</code> function will be called first.</p>
+  </li>
+  <li>
+    <p>The code sample in the <a href="#Getting_Started">Getting started</a> section has been updated to reflect that the URL for the IFrame Player API code has changed to <code>http://www.youtube.com/iframe_api</code>. To ensure that this change does not affect existing implementations, the old URL (<code>http://www.youtube.com/player_api</code>) will continue to work.</p>
+  </li>
+</ul>
+
+<h3 id="july-16,-2012">July 16, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Operations">Operations</a> section now explains that the API supports the <code>setSize()</code> and <code>destroy()</code> methods. The <code>setSize()</code> method sets the size in pixels of the <code>&lt;iframe&gt;</code> that contains the player and the <code>destroy()</code> method removes the <code>&lt;iframe&gt;</code>.</p>
+  </li>
+</ul>
+
+<h3 id="june-6,-2012">June 6, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>We have removed the <code>experimental</code> status from the IFrame Player API.</p>
+  </li>
+  <li>
+    <p>The <a href="#Loading_a_Video_Player">Loading a video player</a> section has been updated to point out that when inserting the <code>&lt;iframe&gt;</code>
+ element that will contain the YouTube player, the IFrame API replaces 
+the element specified in the constructor for the YouTube player. This 
+documentation change does not reflect a change in the API and is 
+intended solely to clarify existing behavior.</p>
+    <p>In addition, that section now notes that the insertion of the <code>&lt;iframe&gt;</code> element could affect the layout of your page if the element being replaced has a different display style than the inserted <code>&lt;iframe&gt;</code> element. By default, an <code>&lt;iframe&gt;</code> displays as an <code>inline-block</code> element.</p>
+  </li>
+</ul>
+
+<h3 id="march-30,-2012">March 30, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Operations">Operations</a> section has been updated to explain that the IFrame API supports a new method, <code>getIframe()</code>, which returns the DOM node for the IFrame embed.</p>
+  </li>
+</ul>
+
+<h3 id="march-26,-2012">March 26, 2012</h3>
+<p>This update contains the following changes:</p>
+
+<ul>
+  <li>
+    <p>The <a href="#Requirements">Requirements</a> section has been updated to note the minimum player size.</p>
+  </li>
+</ul>
+
+</div>
+
+    </div>
+  
+          </div>
+
+    
+                   
+         
+                   
+          </article>
+</article>
+
+
+  <p>Except as otherwise noted, the content of this page is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 License</a>, and code samples are licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. For details, see the <a href="https://developers.google.com/site-policies?hl=de">Google Developers Site Policies</a>. Java is a registered trademark of Oracle and/or its affiliates.</p>  
+
+
+
+                      
+        
+        
+        
+        
+      </section></section>
+    
+    <div type="cookie-notification"><div><p>We serve cookies on this site to analyse traffic, remember your preferences, and optimise your experience.</p><p><a href="https://policies.google.com/technologies/cookies">More details</a></p></div></div>    
+    
+    
+              
+
+          
+          
+</div></div>
+    </div>
+
+    <div>
+      <div class="reader-message"></div>
+    </div>
+  </div>
+
+  <ul class="toolbar reader-toolbar">
+    <li><button class="button close-button" title="Leseansicht schließen"></button></li>
+    <ul class="dropdown style-dropdown">
+      <li><button class="dropdown-toggle button style-button" title="Schrifteinstellungen"></button></li>
+      <li class="dropdown-popup">
+        <div class="font-type-buttons"><button class="sans-serif-button selected"><div class="name">Aa</div><div class="description">Sans-serif</div></button><button class="serif-button"><div class="name">Aa</div><div class="description">Serif</div></button></div>
+        <hr>
+        <div class="font-size-buttons">
+          <button class="minus-button" title="Kleinere Schrift">
+          </button><button class="font-size-sample">Aa</button><button class="plus-button" title="Größere Schrift">
+        </button></div>
+        <hr>
+        <div class="content-width-buttons">
+          <button class="content-width-minus-button" title="Schmalerer Inhalt">
+          </button><button class="content-width-plus-button" title="Breiterer Inhalt">
+        </button></div>
+        <hr>
+        <div class="line-height-buttons">
+          <button class="line-height-minus-button" title="Kleinerer Zeilenabstand">
+          </button><button class="line-height-plus-button" title="Größerer Zeilenabstand">
+        </button></div>
+        <hr>
+        <div class="color-scheme-buttons"><button class="light-button selected" title="Helles Farbschema"><div class="name">Hell</div></button><button class="dark-button" title="Dunkles Farbschema"><div class="name">Dunkel</div></button><button class="sepia-button" title="Sepia-Farbschema"><div class="name">Sepia</div></button></div>
+        <div class="dropdown-arrow">
+      </div></li>
+    </ul>
+  <ul class="dropdown narrate-dropdown"><li><button class="dropdown-toggle button narrate-toggle" title="Vorlesen"></button></li><li class="dropdown-popup"><div class="narrate-row narrate-control"><button class="narrate-skip-previous" disabled="disabled" title="Zurück"></button><button class="narrate-start-stop" title="Wiedergeben"></button><button class="narrate-skip-next" disabled="disabled" title="Vor"></button></div><div class="narrate-row narrate-rate"><input class="narrate-rate-input" value="0" step="5" max="100" min="-100" type="range" title="Geschwindigkeit"></div><div class="narrate-row narrate-voices"><div class="voiceselect voice-select"><button class="select-toggle" aria-controls="voice-options">
+      <span class="label">Stimme:</span> <span class="current-voice">Standard</span>
+    </button>
+    <div class="options" id="voice-options" role="listbox"><button data-value="automatic" class="option selected" tabindex="-1" role="option" aria-selected="true">Standard</button><button data-value="urn:moz-tts:sapi:Microsoft Hedda Desktop - German?de-DE" class="option" tabindex="-1" role="option">Microsoft Hedda Desktop - German</button></div></div></div><div class="dropdown-arrow"></div></li></ul><button data-buttonid="pocket-button" class="button pocket-button" style="background-image: url(&quot;chrome://pocket/content/panels/img/pocket-outline.svg&quot;); background-size: 20px 20px;" title="In Pocket speichern"></button></ul>
+
+
+
+
+</body></html>
